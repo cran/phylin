@@ -85,25 +85,31 @@ gv$n
 
 
 ###################################################
-### code chunk number 14: summary
+### code chunk number 14: details
+###################################################
+gv
+
+
+###################################################
+### code chunk number 15: summary
 ###################################################
 summary(gv)
 
 
 ###################################################
-### code chunk number 15: model1
+### code chunk number 16: model1
 ###################################################
 gv <- gv.model(gv) 
 
 
 ###################################################
-### code chunk number 16: GV_plot
+### code chunk number 17: GV_plot
 ###################################################
 plot(gv)
 
 
 ###################################################
-### code chunk number 17: extraGV_plot
+### code chunk number 18: extraGV_plot
 ###################################################
 gv2 <- gv.model(gv, range=8)
 gv.linear <- gv.model(gv, model='linear', range=8)
@@ -113,20 +119,27 @@ plot(gv.linear)
 
 
 ###################################################
-### code chunk number 18: summary
+### code chunk number 19: details
+###################################################
+gv
+
+
+###################################################
+### code chunk number 20: summary
 ###################################################
 summary(gv)
 
 
 ###################################################
-### code chunk number 19: lin
+### code chunk number 21: lin
 ###################################################
 lin <- as.integer(vipers$lin == 1) 
-int.krig <- krig(lin, vipers[,1:2], grid, gv, clamp = TRUE)
+int.krig <- krig(lin, vipers[,1:2], grid, gv, neg.weights = FALSE, 
+                 verbose=FALSE)
 
 
 ###################################################
-### code chunk number 20: krigImg
+### code chunk number 22: krigImg
 ###################################################
 grid.image(int.krig, grid, main='Kriging with genetic distances', 
            xlab='Longitude', ylab='Latitude', 
@@ -135,7 +148,7 @@ points(vipers[,1:2], pch=lin+1)
 
 
 ###################################################
-### code chunk number 21: krigSD
+### code chunk number 23: krigSD
 ###################################################
 grid.image(int.krig, grid, ic='sd', main='Kriging with genetic distances', 
            xlab='Longitude', ylab='Latitude', 
@@ -143,7 +156,7 @@ grid.image(int.krig, grid, ic='sd', main='Kriging with genetic distances',
 
 
 ###################################################
-### code chunk number 22: krigBin
+### code chunk number 24: krigBin
 ###################################################
 lin.krig <- as.integer(int.krig$Z>0.95) 
 grid.image(lin.krig, grid, main='Kriging with genetic distances', 
@@ -153,7 +166,7 @@ points(vipers[,1:2], pch=lin+1)
 
 
 ###################################################
-### code chunk number 23: treesholds
+### code chunk number 25: treesholds
 ###################################################
 #regular sampling
 regSampling <- seq(0.01, 0.08, 0.005) 
@@ -170,7 +183,7 @@ length(singleSampling)
 
 
 ###################################################
-### code chunk number 24: treeSampling
+### code chunk number 26: treeSampling
 ###################################################
 layout(matrix(1:3, 1, 3)) 
 plot(hc, hang = -1, labels = FALSE, main= 'Regular sampling') 
@@ -182,7 +195,7 @@ abline (h=singleSampling, col='red', lty=2)
 
 
 ###################################################
-### code chunk number 25: contactcode
+### code chunk number 27: contactcode
 ###################################################
 contact = rep(0, nrow(grid)) # Sums all probabilities 
 
@@ -192,7 +205,7 @@ for (h in regSampling) {
     ct = rep(1, nrow(grid)) # Product of individual cluster/lineage map 
     for (i in unique(lins)) { 
         lin <- as.integer(lins == i) 
-        krg <- krig(lin, vipers[,1:2], grid, gv, clamp = TRUE, verbose=FALSE) 
+        krg <- krig(lin, vipers[,1:2], grid, gv, neg.weights = FALSE, verbose=FALSE) 
 
         # Product of the complement of the cluster ocurrence probability. 
         ct <- ct * (1 - krg$Z)
@@ -204,7 +217,7 @@ krg$Z <- contact / length(regSampling)
 
 
 ###################################################
-### code chunk number 26: contactReg
+### code chunk number 28: contactReg
 ###################################################
 grid.image(krg, grid, main='Potential contact zones / Regular sampling', 
            xlab='Longitude', ylab='Latitude', 
@@ -213,7 +226,7 @@ points(vipers[,1:2], cex=0.5)
 
 
 ###################################################
-### code chunk number 27: contactNode
+### code chunk number 29: contactNode
 ###################################################
 contact = rep(0, nrow(grid)) # Sums all probabilities 
 
@@ -223,7 +236,7 @@ for (h in nodeSampling) {
     ct = rep(1, nrow(grid)) # Product of individual cluster/lineage map 
     for (i in unique(lins)) { 
         lin <- as.integer(lins == i) 
-        krg <- krig(lin, vipers[,1:2], grid, gv, clamp = TRUE, verbose=FALSE) 
+        krg <- krig(lin, vipers[,1:2], grid, gv, neg.weights = FALSE, verbose=FALSE) 
 
         # Product of the complement of the cluster ocurrence probability. 
         ct <- ct * (1 - krg$Z) 
@@ -240,7 +253,7 @@ points(vipers[,1:2], cex=0.5)
 
 
 ###################################################
-### code chunk number 28: contactSingle
+### code chunk number 30: contactSingle
 ###################################################
 contact = rep(0, nrow(grid)) # Sums all probabilities 
 
@@ -250,7 +263,7 @@ for (h in singleSampling) {
     ct = rep(1, nrow(grid)) # Product of individual cluster/lineage map 
     for (i in unique(lins)) { 
         lin <- as.integer(lins == i) 
-        krg <- krig(lin, vipers[,1:2], grid, gv, clamp = TRUE, verbose=FALSE) 
+        krg <- krig(lin, vipers[,1:2], grid, gv, neg.weights = FALSE, verbose=FALSE) 
 
         # Product of the complement of the cluster ocurrence probability. 
         ct <- ct * (1 - krg$Z)  
@@ -267,7 +280,7 @@ points(vipers[,1:2], cex=0.5)
 
 
 ###################################################
-### code chunk number 29: midpoints
+### code chunk number 31: midpoints
 ###################################################
 mp <- midpoints(vipers[,1:2]) 
 
@@ -282,7 +295,7 @@ int <- idw(mp[,5], mp[,3:4], grid)
 
 
 ###################################################
-### code chunk number 30: midpoints
+### code chunk number 32: midpoints
 ###################################################
 grid.image(int, grid, main='IDW interpolation', 
         xlab='Longitude', ylab='Latitude', 

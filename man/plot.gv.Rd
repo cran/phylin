@@ -9,8 +9,11 @@
   interval for the median.
 }
 \usage{
-\method{plot}{gv}(x, line.res = 100, pch=1, legend=TRUE, leg.x=NA, leg.y=NA, 
-                  leg.cex=1, ...)
+\method{plot}{gv}(x, line.res = 100, pch=1, legend=TRUE, leg.x=NA,
+                  leg.y=NA, leg.cex=1, bar.length=0.1, bar.col="gray",
+                  bar.lty=par("lty"), xlab='Distance', ylab='Semivariance',
+                  x.line=3, y.line=3, ncol=1, main=NULL,
+                  leg.label = expression(italic('n')*' size'), ...)
 }
 \arguments{
   \item{x}{
@@ -36,8 +39,40 @@
   \item{leg.cex}{
     Multiplication factor for the legend symbol size.
 }
-  \item{\dots}{
-    Further plotting arguments to be passed.
+  \item{bar.length}{
+    If multiple trees are given, confidence interval bars are ploted. The
+    horizontal length of the line at both bar tips is defined with this
+    parameter (defaults to 0.1).
+}
+  \item{bar.col}{
+    The color of the bars when multiple trees are given.
+}
+  \item{bar.lty}{
+    The line type for the bars when multiple tree are given.
+}
+  \item{xlab}{
+    The label for x axis.
+}
+  \item{ylab}{
+    The label for y axis.
+}
+  \item{x.line}{
+    Position of x label in lines.
+}
+  \item{y.line}{
+    Position of y label in lines.
+}
+  \item{ncol}{
+    Number of legend columns.
+}
+  \item{main}{
+    Main title of the plot.
+}
+  \item{leg.label}{
+    Legend title.
+}
+\item{\dots}{
+  Further plotting arguments to be passed.
 }
 }
 \details{
